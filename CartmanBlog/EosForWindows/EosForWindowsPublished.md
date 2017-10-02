@@ -1,3 +1,5 @@
+If you are a Windows C++ developer and MS Visual Studio is your favorite IDE, you might wonder if it's possible to have the EOS code compiled directly on Windows.
+
 We have made several attempts with Windows C++ compilers, but to no avail. The main problem is that, while the EOS code is branched with the `WIN32` flag, unfortunately it's been done inconsistently. Also, Windows *Clang* compiler behaves differently than its Unix counterpart - it seems to be more restrictive. For example expressions like `std::move(u8"env")` are invalid in Windows.
 
 However, we've come up with an alternative solution: [Windows Subsystem for Linux](https://msdn.microsoft.com/en-us/commandline/wsl/about) combined with [Visual Studio Code](https://code.visualstudio.com/) IDE. As you'll see this approach works even better than having the code compiled directly in Windows.
