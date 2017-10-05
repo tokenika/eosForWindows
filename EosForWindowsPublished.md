@@ -91,20 +91,15 @@ At this stage you can start using the Ubuntu shell available in *Visual Studio C
 
 All the following commands are to be run in an Ubuntu shell.
 
-1. Define the following system variables:
+1. Define the following system variable:
 ```
-export WORKSPACE_DIR=/mnt/x/Workspaces/EOS
-export EOSIO_INSTALL_DIR=${WORKSPACE_DIR}/eos
-export EOS_PROGRAMS=${EOSIO_INSTALL_DIR}/build/programs
-export TEMP_DIR=/tmp
+export EOSIO_INSTALL_DIR=/mnt/x/Workspaces/EOS/eos
 ```
 NOTE: make sure to replace `x/Workspaces/EOS` with the appropriate path that matches the workspace location you have chosen on your computer.
 
-2. Save the above system variables to the `~/.profile` file:
+2. Save the above system variable to the `~/.profile` file:
 ```
-echo "export WORKSPACE_DIR=${WORKSPACE_DIR}"  >> ~/.profile
 echo "export EOSIO_INSTALL_DIR=${EOSIO_INSTALL_DIR}"  >> ~/.profile
-echo "export EOS_PROGRAMS=${EOS_PROGRAMS}" >> ~/.profile
 ```
 
 3. Install `cmake` and `git`:
@@ -115,7 +110,7 @@ sudo apt install git
 
 4. Clone the source code from the EOS repository:
 ```
-cd ${WORKSPACE_DIR}
+cd ${EOSIO_INSTALL_DIR}/../
 git clone https://github.com/eosio/eos --recursive
 ```
 
@@ -128,7 +123,7 @@ NOTE: As this process requires downloading a lot of files from various sources, 
 
 # Run the Executables
 
-If no errors have occurred, you should have the EOS code on your Windows system compiled, resulting with multiple libraries and executables. Executables are placed in the `$EOS_PROGRAMS` folder:
+If no errors have occurred, you should have the EOS code on your Windows system compiled, resulting with multiple libraries and executables. Executables are placed in the `${EOSIO_INSTALL_DIR}/build/programs` folder:
 
 - `eosd` - a server-side blockchain node component,
 - `eosc` - a command line interface to interact with the blockchain,
@@ -139,7 +134,7 @@ At this stage you should be able to run tests described in `eos/README.md`.
 
 For completeness, let's try if EOS can be started:
 ```
-cd ${EOS_PROGRAMS}/eosd && ./eosd
+cd ${EOSIO_INSTALL_DIR}/build/programs/eosd && ./eosd
 ```
 At this stage it should exit with an error complaining about the `genesis.json` file not being defined. In case it does not exit with this error, you can always close it with `ctrl + C`.
 
@@ -183,7 +178,7 @@ NOTE: Make sure to set the proper value for the `genesis.json` path - most proba
 
 At this stage, when you run `eosd` again, it should start block production:
 ```
-cd ${EOS_PROGRAMS}/eosd && ./eosd
+cd ${EOSIO_INSTALL_DIR}/build/programs/eosd && ./eosd
 ```
 
 This is what you should see in your console if everything works OK:
