@@ -81,9 +81,9 @@ You may dislike the dark-blue output of the *bash*. If so, open the menu ot the 
 export WORKSPACE_DIR=/mnt/e/Workspaces/EOS && \
 export EOSIO_INSTALL_DIR=${WORKSPACE_DIR}/eos && \
 export EOS_PROGRAMS=${EOSIO_INSTALL_DIR}/build/programs && \
-echo "export WORKSPACE_DIR=${WORKSPACE_DIR}"  >> ~/.bashrc && \
-echo "export EOSIO_INSTALL_DIR=${EOSIO_INSTALL_DIR}"  >> ~/.bashrc && \
-echo "export EOS_PROGRAMS=${EOS_PROGRAMS}" >> ~/.bashrc
+echo "export WORKSPACE_DIR=${WORKSPACE_DIR}"  >> ~/.profile && \
+echo "export EOSIO_INSTALL_DIR=${EOSIO_INSTALL_DIR}"  >> ~/.profile && \
+echo "export EOS_PROGRAMS=${EOS_PROGRAMS}" >> ~/.profile
 ```
 
 3. Clean install Ubuntu
@@ -93,7 +93,7 @@ cd ${WORKSPACE_DIR} &&  git clone https://github.com/eosio/eos --recursive
 
 export TEMP_DIR=/tmp && \
 cd ${EOSIO_INSTALL_DIR} && ./build.sh ubuntu full && \
-echo "export BOOST_ROOT=${BOOST_ROOT}" >> ~/.bashrc
+echo "export BOOST_ROOT=${BOOST_ROOT}" >> ~/.profile
 ```
 
 ## All is ready now

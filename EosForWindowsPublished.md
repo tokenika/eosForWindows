@@ -30,10 +30,10 @@ Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-L
     -- Select the *Developer Mode* radio button.
     -- If prompted, restart your computer again.
 
-4. Open Windows command prompt and type `bash`.  After you have accepted the license agreement, a Ubuntu user-mode image will be downloaded and extracted to `%localappdata%\lxss\`. You will be prompted for setting up a Linux user name and password. When the process is finished, a shortcut named *Bash on Ubuntu on Windows* will be added to your *Start Menu*.
+<!-- 4. Open Windows command prompt and type `bash`.  After you have accepted the license agreement, a Ubuntu user-mode image will be downloaded and extracted to `%localappdata%\lxss\`. You will be prompted for setting up a Linux user name and password. When the process is finished, a shortcut named *Bash on Ubuntu on Windows* will be added to your *Start Menu*. -->
 
 5. Launch a new Ubuntu shell by either:
-   -- Typing `bash` in the command prompt, or
+   -- Typing `bash` in the *Windows Command Prompt* or in the *Windows PowerShell*, or
    -- Using the *Bash on Ubuntu on Windows* shortcut available from the *Start Menu*.
 
 6. Once you are inside the Linux shell, make sure you are running Ubuntu 16:
@@ -98,11 +98,11 @@ export TEMP_DIR=/tmp
 ```
 NOTE: make sure to replace `x/Workspaces/EOS` with the appropriate path that matches the workspace location you have chosen on your computer.
 
-2. Save the above system variables to the `~/.bashrc` file:
+2. Save the above system variables to the `~/.profile` file:
 ```
-echo "export WORKSPACE_DIR=${WORKSPACE_DIR}"  >> ~/.bashrc
-echo "export EOSIO_INSTALL_DIR=${EOSIO_INSTALL_DIR}"  >> ~/.bashrc
-echo "export EOS_PROGRAMS=${EOS_PROGRAMS}" >> ~/.bashrc
+echo "export WORKSPACE_DIR=${WORKSPACE_DIR}"  >> ~/.profile
+echo "export EOSIO_INSTALL_DIR=${EOSIO_INSTALL_DIR}"  >> ~/.profile
+echo "export EOS_PROGRAMS=${EOS_PROGRAMS}" >> ~/.profile
 ```
 
 3. Install `cmake` and `git`:
@@ -225,7 +225,7 @@ In order to update the source code from the official repository and recompile it
 cd ${EOSIO_INSTALL_DIR}
 git pull
 rm -r build && mkdir build && cd build
-export BOOST_ROOT=${HOME}/opt/boost_1_64_0
+
 cmake -DCMAKE_BUILD_TYPE=Debug \
     -DCMAKE_C_COMPILER=clang-4.0 \
     -DCMAKE_CXX_COMPILER=clang++-4.0 \
@@ -233,5 +233,6 @@ cmake -DCMAKE_BUILD_TYPE=Debug \
     -DBINARYEN_BIN=${HOME}/opt/binaryen/bin \
     -DOPENSSL_ROOT_DIR=/usr/local/opt/openssl \
     -DOPENSSL_LIBRARIES=/usr/local/opt/openssl/lib \
+    -DBOOST_ROOT=${HOME}/opt/boost_1_64_0
     ../ && make
 ```
