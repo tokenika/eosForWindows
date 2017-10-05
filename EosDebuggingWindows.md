@@ -64,7 +64,7 @@ opens *c_cpp_properties.json* file. Replace the contents of this file with the f
     "version": 3
 }
 ```
-3. Set new environment variables that are used in the properties file. Note that `HOME` is the linux `HOME`, and `EOSIO_INSTALL_DIR` has been set prior to the compilation of EOS. (In our environment `HOME=/home/cartman`, `EOSIO_INSTALL_DIR=/mnt/e/Workspaces/EOS/eos`.) You can set Windows system variables `LXSS_ROOT`(where in the *Windows* file system is the *root* of *Ubuntu*) and 'EOSIO_INSTALL_DIR_WIN' (where in the *Windows* file system is EOS), or you can replace them with literals. In our environment `LXSS_ROOT=C:/Users/cartman/AppData/Local/lxss` and `EOSIO_INSTALL_DIR_WIN=E:/Workspaces/EOS/`.
+3. Set new environment variables that are used in the properties file. Note that `HOME` is the linux `HOME`, and `EOSIO_INSTALL_DIR` has been set prior to the compilation of EOS. (In our environment `HOME=/home/cartman`, `EOSIO_INSTALL_DIR=/mnt/e/Workspaces/EOS/eos`.) You can set Windows system variables `LXSS_ROOT` (where in the *Windows* file system is the *root* of *Ubuntu*) and 'EOSIO_INSTALL_DIR_WIN' (where in the *Windows* file system is EOS), or you can replace them with literals. In our environment `LXSS_ROOT=C:/Users/cartman/AppData/Local/lxss` and `EOSIO_INSTALL_DIR_WIN=E:/Workspaces/EOS/`.
 
 4. Click on the Configure gear icon on the Debug view top bar and VS Code will generate a launch.json file under your workspace's .vscode folder.
 ```
