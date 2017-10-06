@@ -3,10 +3,13 @@
 Recently, we have shown how to install, compile and run EOS code on a Windows platform. This can be done by combining the [Windows Subsystem for Linux](https://msdn.microsoft.com/en-us/commandline/wsl/about) with the [*Visual Studio Code*](https://code.visualstudio.com/). Now, if EOS is compiled, it can be debugged. *Visual Studio Code* is ready for this purpose.
 
 ## Setting up
-
-1. In the vscode *EXPLORER* do: File > Open Folder ... <br>
+1. Install Ubuntu debugger:
+```
+sudo apt install gdb
+```
+2. In the vscode *EXPLORER* do: File > Open Folder ... <br>
 browse where you keep the contents of the EOS repository.
-2. Crt+Shift+P ... C/Cpp Edit Configurations <br>
+3. Crt+Shift+P ... C/Cpp Edit Configurations <br>
 opens *c_cpp_properties.json* file. Replace the contents of this file with the following text:
 ```
 {
@@ -64,9 +67,9 @@ opens *c_cpp_properties.json* file. Replace the contents of this file with the f
     "version": 3
 }
 ```
-3. Set new environment variables that are used in the properties file. Note that `HOME` is the linux `HOME`, and `EOSIO_INSTALL_DIR` has been set prior to the compilation of EOS. (In our environment `HOME=/home/cartman`, `EOSIO_INSTALL_DIR=/mnt/e/Workspaces/EOS/eos`.) You can set Windows system variables `LXSS_ROOT` (where in the *Windows* file system is the *root* of *Ubuntu*) and 'EOSIO_INSTALL_DIR_WIN' (where in the *Windows* file system is EOS), or you can replace them with literals. In our environment `LXSS_ROOT=C:/Users/cartman/AppData/Local/lxss` and `EOSIO_INSTALL_DIR_WIN=E:/Workspaces/EOS/`.
+4. Set new environment variables that are used in the properties file. Note that `HOME` is the linux `HOME`, and `EOSIO_INSTALL_DIR` has been set prior to the compilation of EOS. (In our environment `HOME=/home/cartman`, `EOSIO_INSTALL_DIR=/mnt/e/Workspaces/EOS/eos`.) You can set Windows system variables `LXSS_ROOT` (where in the *Windows* file system is the *root* of *Ubuntu*) and 'EOSIO_INSTALL_DIR_WIN' (where in the *Windows* file system is EOS), or you can replace them with literals. In our environment `LXSS_ROOT=C:/Users/cartman/AppData/Local/lxss` and `EOSIO_INSTALL_DIR_WIN=E:/Workspaces/EOS/`.
 
-4. Click on the Configure gear icon on the Debug view top bar and VS Code will generate a launch.json file under your workspace's .vscode folder.
+5. Click on the Configure gear icon on the Debug view top bar and VS Code will generate a launch.json file under your workspace's .vscode folder.
 ```
 {
     "version": "0.2.0",
@@ -105,9 +108,9 @@ opens *c_cpp_properties.json* file. Replace the contents of this file with the f
     ]
 }
 ```
-5. Set new environment variable `EOSIO_INSTALL_DIR` (or replace it with a literal) that is used in the launch configuration file. It has the same value as the corresponding Ubuntu variable but it has to be available for *Windows*. (In our environment `EOSIO_INSTALL_DIR=/mnt/e/Workspaces/EOS/eos`.)
+6. Set new environment variable `EOSIO_INSTALL_DIR` (or replace it with a literal) that is used in the launch configuration file. It has the same value as the corresponding Ubuntu variable but it has to be available for *Windows*. (In our environment `EOSIO_INSTALL_DIR=/mnt/e/Workspaces/EOS/eos`.)
 
-6. Open `programs\eosd\main.cpp` source file. Toggle a breakpoint somewhere close to the beginning of the code.
+7. Open `programs\eosd\main.cpp` source file. Toggle a breakpoint somewhere close to the beginning of the code.
 
 ## Debug
 
