@@ -47,6 +47,7 @@ lsb_release -a
 ```
 sudo apt update
 sudo apt full-upgrade
+sudo apt install -y build-essential
 ```
 
 ### Redoing the Ubuntu installation
