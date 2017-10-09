@@ -64,6 +64,7 @@ lxrun /install
 ```
 sudo apt update
 sudo apt full-upgrade
+sudo apt install -y build-essential
 ```
 
 ### Visual Studio Code
@@ -76,6 +77,7 @@ Download and install *Visual Studio Code* from [the official website](https://co
 Optionally, consider adding C++ extensions to *Visual Studio Code*, as they can be useful for C++ development. Use `Ctrl + Shift + X` to open the *Extensions Panel* and then you might want to add the following extensions:
    -- C/C++
    -- C++ Intelisense
+   -- CMake
    -- CMakeTools
    -- CMake Tools Helper
    -- Code Runner
@@ -221,6 +223,7 @@ NOTE: It might happen that `eosd` hangs and fails to produce blocks at the first
 In order to update the source code from the official repository and recompile it, run the following commands:
 ```
 cd ${EOSIO_INSTALL_DIR}
+git reset --hard # if you want to revert all local changes
 git pull
 rm -r build && mkdir build && cd build
 
@@ -231,6 +234,6 @@ cmake -DCMAKE_BUILD_TYPE=Debug \
     -DBINARYEN_BIN=${HOME}/opt/binaryen/bin \
     -DOPENSSL_ROOT_DIR=/usr/local/opt/openssl \
     -DOPENSSL_LIBRARIES=/usr/local/opt/openssl/lib \
-    -DBOOST_ROOT=${HOME}/opt/boost_1_64_0
-    ../ && make
+    -DBOOST_ROOT=${HOME}/opt/boost_1_64_0 ../ 
+make
 ```
