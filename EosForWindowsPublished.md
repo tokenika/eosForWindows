@@ -100,9 +100,9 @@ export EOSIO_INSTALL_DIR=/mnt/x/Workspaces/EOS/eos
 ```
 NOTE: make sure to replace `x/Workspaces/EOS` with the appropriate path that matches the workspace location you have chosen on your computer.
 
-2. Save the above system variable to the `~/.profile` file:
+2. Save the above system variable to the `~/.bashrc` file:
 ```
-echo "export EOSIO_INSTALL_DIR=${EOSIO_INSTALL_DIR}"  >> ~/.profile
+echo "export EOSIO_INSTALL_DIR=${EOSIO_INSTALL_DIR}"  >> ~/.bashrc
 ```
 
 3. Install `cmake` and `git`:
