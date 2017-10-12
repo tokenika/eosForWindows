@@ -116,6 +116,11 @@ sudo apt install git
 cd ${EOSIO_INSTALL_DIR}/../
 git clone https://github.com/eosio/eos --recursive
 ```
+4'. You can clone the EOS repository with windows tools, as well, but be sure to set the linux line ending style. With the *Windows Command Prompt*, for example:
+```
+git config --global core.autocrlf false
+git clone https://github.com/eosio/eos --recursive
+```
 
 5. Now you are ready to proceed with the actual compilation of the source code. This step can take several hours, depending on your computer's power, and will require you to intermittently confirm some actions and also to supply the `sudo` password.
 ```
