@@ -18,28 +18,25 @@ sudo apt install nedit
 
 3. Make environment variables, defining the workspace:
 ```bash
-export WORKSPACE_DIR=~/Workspaces/EOS && \
+WORKSPACE_DIR=~/Workspaces/EOS
+
 export EOSIO_INSTALL_DIR=${WORKSPACE_DIR}/eos && \
-export EOS_PROGRAMS=${EOSIO_INSTALL_DIR}/build/programs && \
-echo "export WORKSPACE_DIR=${WORKSPACE_DIR}"  >> ~/.bashrc && \
 echo "export EOSIO_INSTALL_DIR=${EOSIO_INSTALL_DIR}"  >> ~/.bashrc && \
-echo "export EOS_PROGRAMS=${EOS_PROGRAMS}" >> ~/.bashrc
 ```
 4. Clean install Ubuntu
 
 ```bash
 
 mkdir eos
-cd cd ${WORKSPACE_DIR} && git clone https://github.com/eosio/eos --recursive
+cd ${WORKSPACE_DIR} && git clone https://github.com/eosio/eos --recursive
 
-export TEMP_DIR=/tmp && \
-cd ${EOSIO_INSTALL_DIR} && ./build.sh ubuntu full && \
-echo "export BOOST_ROOT=${BOOST_ROOT}" >> ~/.bashrc
+cd ${EOSIO_INSTALL_DIR}
+./build.sh ubuntu full
 ```
 
 ## All is ready now
 
-Now, you have the EOS code in your *Windows 10* computer, compiled resulting with  libraries and executables. Executables are placed in the `$EOS_PROGRAMS` folder:
+Now, you have the EOS code in your *Windows 10* computer, compiled resulting with  libraries and executables. Executables are placed in `${EOSIO_INSTALL_DIR}/build/programs` folder:
 * eosd - server-side blockchain node component
 * eosc - command line interface to interact with the blockchain
 * eos-walletd - EOS wallet
@@ -48,7 +45,7 @@ Now, you have the EOS code in your *Windows 10* computer, compiled resulting wit
 Now, you can do tests described in eos/README.md. For completeness, let us prove that eos can be started.
 
 ```bash 
-cd ${EOS_PROGRAMS}/eosd && ./eosd
+cd ${EOSIO_INSTALL_DIR}/build/programs/eosd && ./eosd
 ```
 If *eosd* does not exit with an error, close it immediately with <kbd>Ctrl-C</kbd>.
 
