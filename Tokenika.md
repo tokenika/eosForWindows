@@ -113,5 +113,6 @@ cmake -DCMAKE_BUILD_TYPE=Release \
     -DBINARYEN_BIN=${HOME}/opt/binaryen/bin \
     -DOPENSSL_ROOT_DIR=/usr/local/opt/openssl \
     -DOPENSSL_LIBRARIES=/usr/local/opt/openssl/lib \
-    ../ && make
+    -DBOOST_ROOT=${HOME}/opt/boost_1_64_0 ../ 
+    make
 ```
