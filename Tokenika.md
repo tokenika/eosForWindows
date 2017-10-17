@@ -21,7 +21,7 @@ sudo apt install nedit
 WORKSPACE_DIR=~/Workspaces/EOS
 
 export EOSIO_INSTALL_DIR=${WORKSPACE_DIR}/eos && \
-echo "export EOSIO_INSTALL_DIR=${EOSIO_INSTALL_DIR}"  >> ~/.bashrc && \
+echo "export EOSIO_INSTALL_DIR=${EOSIO_INSTALL_DIR}"  >> ~/.profile
 ```
 4. Clean install Ubuntu
 
@@ -99,7 +99,7 @@ plugin = eos::http_plugin
 
 ```bash
 cd ${EOSIO_INSTALL_DIR}/
-git pull
+git pull --recursive
 
 rm -r build && mkdir build && cd build
 
@@ -111,5 +111,5 @@ cmake -DCMAKE_BUILD_TYPE=Release \
     -DOPENSSL_ROOT_DIR=/usr/local/opt/openssl \
     -DOPENSSL_LIBRARIES=/usr/local/opt/openssl/lib \
     -DBOOST_ROOT=${HOME}/opt/boost_1_64_0 ../ 
-    make
+make
 ```
