@@ -90,7 +90,7 @@ plugin = eos::producer_plugin
 plugin = eos::chain_api_plugin
 plugin = eos::wallet_api_plugin
 plugin = eos::account_history_api_plugin
-plugin = eos::http_plugin 
+plugin = eos::http_plugin
 ```
 
 ## Update EOS, if needed
