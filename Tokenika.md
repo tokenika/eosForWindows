@@ -26,8 +26,6 @@ echo "export EOSIO_INSTALL_DIR=${EOSIO_INSTALL_DIR}"  >> ~/.profile
 4. Clean install Ubuntu
 
 ```bash
-
-mkdir eos
 cd ${WORKSPACE_DIR} && git clone https://github.com/eosio/eos --recursive
 
 cd ${EOSIO_INSTALL_DIR}
@@ -92,13 +90,13 @@ plugin = eos::producer_plugin
 plugin = eos::chain_api_plugin
 plugin = eos::wallet_api_plugin
 plugin = eos::account_history_api_plugin
-plugin = eos::http_plugin 
+plugin = eos::http_plugin
 ```
 
 ## Update EOS, if needed
 
 ```bash
-cd ${EOSIO_INSTALL_DIR}/
+cd ${EOSIO_INSTALL_DIR}
 git pull --recursive
 
 rm -r build && mkdir build && cd build
