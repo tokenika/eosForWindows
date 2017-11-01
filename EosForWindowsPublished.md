@@ -232,13 +232,6 @@ git reset --hard # if you want to revert all local changes
 git pull
 rm -r build && mkdir build && cd build
 
-cmake -DCMAKE_BUILD_TYPE=Debug \
-    -DCMAKE_C_COMPILER=clang-4.0 \
-    -DCMAKE_CXX_COMPILER=clang++-4.0 \
-    -DWASM_LLVM_CONFIG=${HOME}/opt/wasm/bin/llvm-config \
-    -DBINARYEN_BIN=${HOME}/opt/binaryen/bin \
-    -DOPENSSL_ROOT_DIR=/usr/local/opt/openssl \
-    -DOPENSSL_LIBRARIES=/usr/local/opt/openssl/lib \
-    -DBOOST_ROOT=${HOME}/opt/boost_1_64_0 ../ 
+cmake -DCMAKE_BUILD_TYPE=Debug ../ 
 make
 ```
