@@ -155,7 +155,6 @@ Edit the `config.ini` file (in our case it's located here: `X:\Workspaces\EOS\eo
 Then append the following content in `config.ini`:
 ```
 genesis-json = /mnt/x/Workspaces/EOS/eos/build/genesis.json
-
 producer-name = inita
 producer-name = initb
 producer-name = initc
@@ -170,17 +169,18 @@ producer-name = initk
 producer-name = initl
 producer-name = initm
 producer-name = initn
+producer-name = inito
+producer-name = initp
 producer-name = initq
 producer-name = initr
 producer-name = inits
 producer-name = initt
 producer-name = initu
 
-plugin = eos::producer_plugin
-plugin = eos::chain_api_plugin
-plugin = eos::wallet_api_plugin
-plugin = eos::account_history_api_plugin
-plugin = eos::http_plugin 
+plugin = eosio::producer_plugin
+plugin = eosio::wallet_api_plugin
+plugin = eosio::chain_api_plugin
+plugin = eosio::http_plugin 
 ```
 NOTE: Make sure to set the proper value for the `genesis.json` path - most probably your path will be different than the one quoted above.
 
