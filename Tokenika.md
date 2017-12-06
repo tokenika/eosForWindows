@@ -86,11 +86,11 @@ producer-name = inits
 producer-name = initt
 producer-name = initu
 
-plugin = eos::producer_plugin
-plugin = eos::chain_api_plugin
-plugin = eos::wallet_api_plugin
-plugin = eos::account_history_api_plugin
-plugin = eos::http_plugin
+plugin = eosio::producer_plugin
+plugin = eosio::chain_api_plugin
+plugin = eosio::wallet_api_plugin
+plugin = eosio::account_history_api_plugin
+plugin = eosio::http_plugin
 ```
 
 ## Update EOS, if needed

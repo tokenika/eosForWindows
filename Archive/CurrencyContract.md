@@ -130,7 +130,7 @@ EOS comes with example contracts that can be uploaded and run for testing purpos
 cd ${EOS_PROGRAMS}/eosd/ && ./eosd
 ```
 
-* Set up a wallet and importing account key. As the `config.ini` has an entry reading `plugin = eos::wallet_api_plugin`, EOS wallet is running as a part of `eosd` process. Every contract requires an associated account, so create a wallet. </br> 
+* Set up a wallet and importing account key. As the `config.ini` has an entry reading `plugin = eosio::wallet_api_plugin`, EOS wallet is running as a part of `eosd` process. Every contract requires an associated account, so create a wallet. </br> 
 Start a new bash (Ctr + Shift + \`), and input there:
 
 ```bash
