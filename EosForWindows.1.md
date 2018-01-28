@@ -6,9 +6,7 @@ However, we've come up with an alternative solution: [Windows Subsystem for Linu
 
 # Prerequisites
 
-You need to be running [Windows 10, version 1703, also known as the Creators Update](https://docs.microsoft.com/en-us/windows/whats-new/whats-new-windows-10-version-1703). To verify your Windows version open the *Settings Panel* and then navigate to `System > About`.
-
-If you have an earlier version of Windows 10 and for some reasons don't want to upgrade to version 1703, you might still be able to give it a try, provided you manage to upgrade your *Windows Subsystem for Linux* from Ubuntu 14 to Ubuntu 16.
+You need to be running Windows build 16215 or later. To verify your Windows version open the *Settings Panel* and then navigate to `System > About`.
 
 *Windows Subsystem for Linux* can be only installed on the system drive. If you're running low on your disk space (extra 3-4 GB will be needed), you might want to expand your system partition using tools available [here](https://www.partition-tool.com/).
 
@@ -18,55 +16,14 @@ First we will enable *Windows Subsystem for Linux* and then we will access the B
 
 ### Windows Subsystem for Linux
 
-The official *Windows Subsystem for Linux* installation guide is to be found [here](https://msdn.microsoft.com/en-us/commandline/wsl/install_guide). However, for your convenience, we provide the following simplified procedure:
+[Get Ubuntu on Windows](#www.microsoft.com/en-us/store/p/ubuntu/9nblggh4msv6?rtc=1) (from the Windows Store) free, clicking the 'Get the app' button there. In a result, you get an Ubuntu terminal open. Follow instructions.
 
-1. Open *PowerShell* in the administrator mode (right-click and choose `Run as Administrator`) and execute this command: 
-```
-Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
-```
-
-2. Restart your computer when prompted.
-
-3. Turn on the *Developer Mode*:
-    -- Open the *Settings Panel* and navigate to `Update & Security > For developers`.
-    -- Select the *Developer Mode* radio button.
-    -- If prompted, restart your computer again.
-
-<!-- 4. Open Windows command prompt and type `bash`.  After you have accepted the license agreement, a Ubuntu user-mode image will be downloaded and extracted to `%localappdata%\lxss\`. You will be prompted for setting up a Linux user name and password. When the process is finished, a shortcut named *Bash on Ubuntu on Windows* will be added to your *Start Menu*. -->
-
-5. Launch a new Ubuntu shell by either:
-   -- Typing `bash` in the *Windows Command Prompt* or in the *Windows PowerShell*, or
-   -- Using the *Bash on Ubuntu on Windows* shortcut available from the *Start Menu*.
-
-6. Once you are inside the Linux shell, make sure you are running Ubuntu 16:
-```
-lsb_release -a
-```
-
-7. And finally update & upgrade Ubuntu:
+Finally update & upgrade Ubuntu:
 ```
 sudo apt update
 sudo apt full-upgrade
 sudo apt install -y build-essential
 ```
-
-### Redoing the Ubuntu installation
-
-The following step is optional. Use it only if, for some reasons, you need to start over and redo the Ubuntu installation.
-
-1. Open Windows command prompt and run:
-```
-lxrun /uninstall /full
-lxrun /install
-```
-
-2. Run `bash` to launch a new Ubuntu shell and inside it run update & upgrade:
-```
-sudo apt update
-sudo apt full-upgrade
-sudo apt install -y build-essential
-```
-
 ### Visual Studio Code
 
 Download and install *Visual Studio Code* from [the official website](https://code.visualstudio.com/Download). To enable Ubuntu bash console inside *Visual Studio Code* you need to modify the *User Settings*:

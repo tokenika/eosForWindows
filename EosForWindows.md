@@ -1,131 +1,160 @@
-# Installing EOS on a Windows computer
+If you are a Windows C++ developer and MS Visual Studio is your favorite IDE, you might wonder if it's possible to have the EOS code compiled directly on Windows.
 
-However the MS Visual Studio is a natural choice for a Windows C++ practitioner, it is not an option here, rather. 
+We have made several attempts with Windows C++ compilers, but to no avail. The main problem is that, while the EOS code is branched with the `WIN32` flag, unfortunately it's been done inconsistently. Also, Windows *Clang* compiler behaves differently than its Unix counterpart - it seems to be more restrictive. For example expressions like `std::move(u8"env")` are invalid in Windows.
 
-We have tried. The main problem is that, while the eos code is branched with the `WIN32` flag, it is done inconsistently. Also, the *Windows* and *Unix* *clang* compilers are not equal: the *Windows* one is more restrictive. For example expressions like  `std::move(u8"env")` are invalid there (in Windows, `u8"env"` does the same).
+However, we've come up with an alternative solution: [Windows Subsystem for Linux](https://msdn.microsoft.com/en-us/commandline/wsl/about) combined with [Visual Studio Code](https://code.visualstudio.com/) IDE. As you'll see this approach works even better than having the code compiled directly in Windows.
 
-The *plan B* solution is the [Windows Subsystem for Linux](#https://msdn.microsoft.com/en-us/commandline/wsl/about) implementing the *Linux* *bash*, combined with the [Visual Studio Code](#https://code.visualstudio.com/). Prerequisite is *64-bit version of Windows 10 Anniversary Update or later (build 1607+)*
+# Prerequisites
 
-Now, we see that the alternative is not worse, or even better than the first guess.
+You need to be running [Windows 10, version 1703, also known as the Creators Update](https://docs.microsoft.com/en-us/windows/whats-new/whats-new-windows-10-version-1703). To verify your Windows version open the *Settings Panel* and then navigate to `System > About`.
 
-## Tooling up
+If you have an earlier version of Windows 10 and for some reasons don't want to upgrade to version 1703, you might still be able to give it a try, provided you manage to upgrade your *Windows Subsystem for Linux* from Ubuntu 14 to Ubuntu 16.
+
+*Windows Subsystem for Linux* can be only installed on the system drive. If you're running low on your disk space (extra 3-4 GB will be needed), you might want to expand your system partition using tools available [here](https://www.partition-tool.com/).
+
+# Tooling up
+
+First we will enable *Windows Subsystem for Linux* and then we will access the Bash command line interface from within *Visual Studio*. 
 
 ### Windows Subsystem for Linux
-The *Windows Subsystem for Linux* can be only installed on the system drive. If there is not enough space on your computer there - at least several GB is needed - you can rearrange the partition by means of a tool sold [there](#https://www.partition-tool.com/).
 
-An installation guide is [there](#https://msdn.microsoft.com/en-us/commandline/wsl/install_guide). Here, we cite a simplified procedure; there is another, conditional option [there](#https://msdn.microsoft.com/en-us/commandline/wsl/install_guide).
-1. Open *PowerShell* *as Administrator* and run:
+The official *Windows Subsystem for Linux* installation guide is to be found [here](https://msdn.microsoft.com/en-us/commandline/wsl/install_guide). However, for your convenience, we provide the following simplified procedure:
+
+1. Open *PowerShell* in the administrator mode (right-click and choose `Run as Administrator`) and execute this command: 
 ```
 Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
 ```
+
 2. Restart your computer when prompted.
-3. Turn on Developer Mode: 
-    * Open Settings -> Update and Security -> For developers 
-    * Select the Developer Mode radio button.
-4. Open a Windows command prompt. 
-    * Run bash. 
-    ```bash
-    C:\>bash
-        ....
-        and licensed under its terms available here:
-        ....
-    Type "y" to continue:
-    ```
-    * After you have accepted the License, the Ubuntu user-mode image will be downloaded and extracted. A "Bash on Ubuntu on Windows" shortcut will be added to your start menu.
+
+3. Turn on the *Developer Mode*:
+    -- Open the *Settings Panel* and navigate to `Update & Security > For developers`.
+    -- Select the *Developer Mode* radio button.
+    -- If prompted, restart your computer again.
+
+<!-- 4. Open Windows command prompt and type `bash`.  After you have accepted the license agreement, a Ubuntu user-mode image will be downloaded and extracted to `%localappdata%\lxss\`. You will be prompted for setting up a Linux user name and password. When the process is finished, a shortcut named *Bash on Ubuntu on Windows* will be added to your *Start Menu*. -->
+
 5. Launch a new Ubuntu shell by either:
-    * Running bash from a command-prompt
-    * Clicking the start menu shortcut
-6. Upgrade Ubuntu:
-```bash
-sudo apt update && \
-sudo apt full-upgrade && \
-sudo apt install cmake && \
-sudo apt install git
+   -- Typing `bash` in the *Windows Command Prompt* or in the *Windows PowerShell*, or
+   -- Using the *Bash on Ubuntu on Windows* shortcut available from the *Start Menu*.
+
+6. Once you are inside the Linux shell, make sure you are running Ubuntu 16:
 ```
-    
-After installation the Linux distribution will be located at: `%localappdata%\lxss\`.
+lsb_release -a
+```
 
-It may happen later that would like to clean the Ubuntu. Open Windows *Command Prompt*:
-1. lxrun /uninstall /full
-2. lxrun /install
+7. And finally update & upgrade Ubuntu:
+```
+sudo apt update
+sudo apt full-upgrade
+sudo apt install -y build-essential
+```
 
-You may dislike the dark-blue output of the *bash*. If so, open the menu ot the Windows *Command Prompt*.
-1. Select *Defaults > Popup Text*. Set *Selected Color Values* \[190\]\[190\]\[256\].
-2. Select *Defaults > Popup Background*. Set *Selected Color Values* \[0\]\[0\]\[0\].
-3. Do the same selecting *Properties*. 
+### Redoing the Ubuntu installation
+
+The following step is optional. Use it only if, for some reasons, you need to start over and redo the Ubuntu installation.
+
+1. Open Windows command prompt and run:
+```
+lxrun /uninstall /full
+lxrun /install
+```
+
+2. Run `bash` to launch a new Ubuntu shell and inside it run update & upgrade:
+```
+sudo apt update
+sudo apt full-upgrade
+sudo apt install -y build-essential
+```
 
 ### Visual Studio Code
-1. Download a windows version from [there](#https://code.visualstudio.com/Download).
 
-2. Start Visual Studio code. Modify User Settings in VS Code:
-    * File => Preferences => User Settings
-    * and add the following within the settings.json pane:
-“terminal.integrated.shell.windows”: “C:\\Windows\\sysnative\\bash.exe”
-    * You can now toggle the terminal view with ``CTRL+` `` or `View => Toggle Integrated Terminal`
-    * Note that you can have more then one active terminal threads (`Ctr + Shift + ` `).
-3. Consider adding extensions that can be useful for C++ development:
-    * `Ctr + Shift + X` to open the EXTENSIONS panel.
-    * C/C++
-    * C++ Intelisense
-    * CMakeTools
-    * CMake Tools Helper
-    * Code Runner
- 
-## Set up a workspace
+Download and install *Visual Studio Code* from [the official website](https://code.visualstudio.com/Download). To enable Ubuntu bash console inside *Visual Studio Code* you need to modify the *User Settings*:
+   -- Navigate to `File > Preferences > User Settings`.
+   -- Add the following entry in the right-hand side panel to overwrite the default settings: `"terminal.integrated.shell.windows": "C:\\Windows\\sysnative\\bash.exe"`.
+   -- After saving the changes, you should be able to toggle the Ubuntu console with `Ctrl + '` or `View > Integrated Terminal`.
 
-1. Make a workspace for EOS on the Windows file system, to control it from both systems. Let it be `E:\Workspaces\EOS`, for example. On the Linux file system, it is `/mnt/e/Workspaces/EOS`.
+Optionally, consider adding C++ extensions to *Visual Studio Code*, as they can be useful for C++ development. Use `Ctrl + Shift + X` to open the *Extensions Panel* and then you might want to add the following extensions:
+   -- C/C++
+   -- C++ Intelisense
+   -- CMake
+   -- CMakeTools
+   -- CMake Tools Helper
+   -- Code Runner
 
-2. Make environment variables, defining the workspace:
+# Compile the Source Code
 
-```bash
-export WORKSPACE_DIR=/mnt/e/Workspaces/EOS && \
-export EOSIO_INSTALL_DIR=${WORKSPACE_DIR}/eos && \
-export EOS_PROGRAMS=${EOSIO_INSTALL_DIR}/build/programs && \
-echo "export WORKSPACE_DIR=${WORKSPACE_DIR}"  >> ~/.profile && \
-echo "export EOSIO_INSTALL_DIR=${EOSIO_INSTALL_DIR}"  >> ~/.profile && \
-echo "export EOS_PROGRAMS=${EOS_PROGRAMS}" >> ~/.profile
+Create a workspace location for EOS on the Windows file system. In this guide we will be using `X:\Workspaces\EOS` but obviously it's up to you to choose your own location.
+
+On the Linux file system, the above location will be mapped as `/mnt/x/Workspaces/EOS`. The location you have chosen will be mapped accordingly. 
+
+NOTE: use lower case for the name of the drive, in our case it's `/mnt/x/`.
+
+At this stage you can start using the Ubuntu shell available in *Visual Studio Code* (`View > Integrated Terminal`). The main advantage is its support for an easy way to *copy-paste* commands. 
+
+All the following commands are to be run in an Ubuntu shell.
+
+1. Define the following system variable:
+```
+export EOSIO_INSTALL_DIR=/mnt/x/Workspaces/EOS/eos
+```
+NOTE: make sure to replace `x/Workspaces/EOS` with the appropriate path that matches the workspace location you have chosen on your computer.
+
+2. Save the above system variable to the `~/.bashrc` file:
+```
+echo "export EOSIO_INSTALL_DIR=${EOSIO_INSTALL_DIR}"  >> ~/.bashrc
 ```
 
-3. Clean install Ubuntu
-
-```bash
-cd ${WORKSPACE_DIR} &&  git clone https://github.com/eosio/eos --recursive
-
-export TEMP_DIR=/tmp && \
-cd ${EOSIO_INSTALL_DIR} && ./build.sh ubuntu full && \
-echo "export BOOST_ROOT=${BOOST_ROOT}" >> ~/.profile
+3. Install `cmake` and `git`:
+```
+sudo apt install cmake
+sudo apt install git
 ```
 
-## All is ready now
-
-Now, you have the EOS code in your *Windows 10* computer, compiled resulting with  libraries and executables. Executables are placed in the `$EOS_PROGRAMS` folder:
-* eosd - server-side blockchain node component
-* eosc - command line interface to interact with the blockchain
-* eos-walletd - EOS wallet
-* launcher - application for nodes network composing and deployment; [more on launcher](https://github.com/EOSIO/eos/blob/master/testnet.md)
-
-Now, you can do tests described in eos/README.md. For completeness, let us prove that eos can be started.
-
-```bash 
-cd $EOS_PROGRAMS/eosd && ./eosd
+4. Clone the source code from the EOS repository:
 ```
-If *eosd* does not exit with an error, close it immediately with <kbd>Ctrl-C</kbd>.
-
-Find the `genesis.json` path, and the `config.ini` path:
-
-```bash
-locate build/genesis.json
-# response is
-# /mnt/e/Workspaces/EOS/eos/build/genesis.json
-
-locate build/programs/eosd/data-dir/config.ini
+cd ${EOSIO_INSTALL_DIR}/../
+git clone https://github.com/eosio/eos --recursive
+```
+4'. You can clone the EOS repository with windows tools, as well, but be sure to set the linux line ending style. With the *Windows Command Prompt*, for example:
+```
+git config --global core.autocrlf false
+git clone https://github.com/eosio/eos --recursive
 ```
 
-Edit *config.ini*, appending the following text (be careful to set the proper value for the `genesis.json` path, and comment out the original `enable-stale-production` definition):
+5. Now you are ready to proceed with the actual compilation of the source code. This step can take several hours, depending on your computer's power, and will require you to intermittently confirm some actions and also to supply the `sudo` password.
 ```
-genesis-json = /mnt/e/Workspaces/EOS/eos/build/genesis.json # !!!!!!!!!!!!!!!!!!
-enable-stale-production = true
+cd ${EOSIO_INSTALL_DIR}
+./build.sh ubuntu full
+```
+NOTE: As this process requires downloading a lot of files from various sources, it might fail. In this case just try running this step again.
 
+# Run the Executables
+
+If no errors have occurred, you should have the EOS code on your Windows system compiled, resulting with multiple libraries and executables. Executables are placed in the `${EOSIO_INSTALL_DIR}/build/programs` folder:
+
+- `eosd` - a server-side blockchain node component,
+- `eosc` - a command line interface to interact with the blockchain,
+- `eos-walletd` - an EOS wallet,
+- `launcher` - an application for network composing and deployment, more information is available [here](https://github.com/EOSIO/eos/blob/master/testnet.md).
+
+At this stage you should be able to run tests described in `eos/README.md`. 
+
+For completeness, let's try if EOS can be started:
+```
+cd ${EOSIO_INSTALL_DIR}/build/programs/eosd && ./eosd
+```
+At this stage it should exit with an error complaining about the `genesis.json` file not being defined. In case it does not exit with this error, you can always close it with `ctrl + C`.
+
+# Produce Blocks
+
+Figure out the path for your `genesis.json` file. In our case it's `/mnt/x/Workspaces/EOS/eos/build/genesis.json`, yours will probably be different, depending on the workspace location you have chosen.
+
+Edit the `config.ini` file (in our case it's located here: `X:\Workspaces\EOS\eos\build\programs\eosd\data-dir\config.ini`) using *WordPad* (or other text editor of your choice), locate the `enable-stale-production` entry and make it `enable-stale-production = true`.
+
+Then append the following content in `config.ini`:
+```
+genesis-json = /mnt/x/Workspaces/EOS/eos/build/genesis.json
 producer-name = inita
 producer-name = initb
 producer-name = initc
@@ -140,6 +169,8 @@ producer-name = initk
 producer-name = initl
 producer-name = initm
 producer-name = initn
+producer-name = inito
+producer-name = initp
 producer-name = initq
 producer-name = initr
 producer-name = inits
@@ -147,32 +178,60 @@ producer-name = initt
 producer-name = initu
 
 plugin = eosio::producer_plugin
-plugin = eosio::chain_api_plugin
 plugin = eosio::wallet_api_plugin
-plugin = eosio::account_history_api_plugin
+plugin = eosio::chain_api_plugin
 plugin = eosio::http_plugin 
 ```
-Start *eosd* again, it should start block production. It happens that is suspends at the first attempt. Do <kbd>Ctrl-C</kbd>, wait, wait, and try again.
+NOTE: Make sure to set the proper value for the `genesis.json` path - most probably your path will be different than the one quoted above.
 
-## Update EOS, if needed
+At this stage, when you run `eosd` again, it should start block production:
+```
+cd ${EOSIO_INSTALL_DIR}/build/programs/eosd && ./eosd
+```
 
-```bash
-cd $EOSIO_INSTALL_DIR
+This is what you should see in your console if everything works OK:
+```
+232901ms thread-0   chain_plugin.cpp:80           plugin_initialize    ] initializing chain plugin
+232902ms thread-0   producer_plugin.cpp:159       plugin_initialize    ] Public Key: EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV
+232903ms thread-0   http_plugin.cpp:132           plugin_initialize    ] host: 127.0.0.1 port: 8888
+232905ms thread-0   http_plugin.cpp:135           plugin_initialize    ] configured http to listen on 127.0.0.1:8888
+...
+232998ms thread-0   producer_plugin.cpp:170       plugin_startup       ] producer plugin:  plugin_startup() begin
+232999ms thread-0   producer_plugin.cpp:175       plugin_startup       ] Launching block production for 19 producers.
+
+*******************************
+*                             *
+*   ------ NEW CHAIN ------   *
+*   -   Welcome to EOS!   -   *
+*   -----------------------   *
+*                             *
+*******************************
+
+Your genesis seems to have an old timestamp
+Please consider using the --genesis-timestamp option to give your genesis a recent timestamp
+
+233012ms thread-0   producer_plugin.cpp:185       plugin_startup       ] producer plugin:  plugin_startup() end
+233012ms thread-0   http_plugin.cpp:147           plugin_startup       ] start processing http thread
+...
+233059ms thread-0   http_plugin.cpp:224           add_handler          ] add api url: /v1/account_history/get_transaction
+233060ms thread-0   http_plugin.cpp:224           add_handler          ] add api url: /v1/account_history/get_transactions
+237003ms thread-0   chain_controller.cpp:235      _push_block          ] initq #1 @2017-09-29T16:03:57  | 0 trx, 0 pending, exectime_ms=0
+237005ms thread-0   producer_plugin.cpp:233       block_production_loo ] initq generated block #1 @ 2017-09-29T16:03:57 with 0 trxs  0 pending
+240003ms thread-0   chain_controller.cpp:235      _push_block          ] initc #2 @2017-09-29T16:04:00  | 0 trx, 0 pending, exectime_ms=0
+240004ms thread-0   producer_plugin.cpp:233       block_production_loo ] initc generated block #2 @ 2017-09-29T16:04:00 with 0 trxs  0 pending
+243003ms thread-0   chain_controller.cpp:235      _push_block          ] initd #3 @2017-09-29T16:04:03  | 0 trx, 0 pending, exectime_ms=0
+```
+NOTE: It might happen that `eosd` hangs and fails to produce blocks at the first attempt. In this case just exit the process using `ctrl + C`, then wait a bit and try again.
+
+# Update the Source Code
+
+In order to update the source code from the official repository and recompile it, run the following commands:
+```
+cd ${EOSIO_INSTALL_DIR}
+git reset --hard # if you want to revert all local changes
 git pull
-
 rm -r build && mkdir build && cd build
 
-cmake -DCMAKE_BUILD_TYPE=Debug \
-    -DCMAKE_C_COMPILER=clang-4.0 \
-    -DCMAKE_CXX_COMPILER=clang++-4.0 \
-    -DWASM_LLVM_CONFIG=${HOME}/opt/wasm/bin/llvm-config \
-    -DBINARYEN_BIN=${HOME}/opt/binaryen/bin \
-    -DOPENSSL_ROOT_DIR=/usr/local/opt/openssl \
-    -DOPENSSL_LIBRARIES=/usr/local/opt/openssl/lib \
-    ../ && make
+cmake -DCMAKE_BUILD_TYPE=Debug ../ 
+make
 ```
-## Troubleshooting
-
-### 13 NSt8ios_base7failureB5cxx11E: basic_ios::clear: iostream error
-
-This error status happens when `eosd` is disrupted. The minimal cure, that we know, is deleting `${EOS_PROGRAMS}/eosd/data-dir`, and subsequent proceeding *All is ready now" section.
