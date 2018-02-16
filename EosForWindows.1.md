@@ -18,10 +18,12 @@ First we will enable *Windows Subsystem for Linux* and then we will access the B
 
 [Get Ubuntu on Windows](#www.microsoft.com/en-us/store/p/ubuntu/9nblggh4msv6?rtc=1) (from the Windows Store) free, clicking the 'Get the app' button there. In a result, you get an Ubuntu terminal open. Follow instructions.
 
+Consider enabling Windows Select-Copy-Paste shortcuts on the bash console: `Defaults > Console Windows Properties > Quick Edit Mode +`
+
 Finally update & upgrade Ubuntu:
 ```
 sudo apt update
-sudo apt full-upgrade
+sudo apt full-upgrade -y 
 sudo apt install -y build-essential
 ```
 ### Visual Studio Code
